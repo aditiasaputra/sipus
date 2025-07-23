@@ -24,6 +24,62 @@
 			</div>
 			<!--end:Menu item-->
 			<!--begin:Menu item-->
+			<div class="menu-item">
+				<a class="menu-link {{ request()->routeIs('dashboard.*') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+					<span class="menu-icon">{!! getIcon('book-open', 'fs-2') !!}</span>
+					<span class="menu-title">Mata Pelajaran</span>
+				</a>
+			</div>
+			<!--end:Menu item-->
+			<!--begin:Menu item-->
+			<div class="menu-item">
+				<a class="menu-link {{ request()->routeIs('dashboard.*') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+					<span class="menu-icon">{!! getIcon('element-11', 'fs-2') !!}</span>
+					<span class="menu-title">Kelas</span>
+				</a>
+			</div>
+			<!--end:Menu item-->
+			<!--begin:Menu item-->
+			<div class="menu-item">
+				<a class="menu-link {{ request()->routeIs('dashboard.*') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+					<span class="menu-icon">{!! getIcon('teacher', 'fs-2') !!}</span>
+					<span class="menu-title">Guru</span>
+				</a>
+			</div>
+			<!--end:Menu item-->
+			<!--begin:Menu item-->
+			<div class="menu-item">
+				<a class="menu-link {{ request()->routeIs('dashboard.*') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+					<span class="menu-icon">{!! getIcon('profile-circle', 'fs-2') !!}</span>
+					<span class="menu-title">Siswa</span>
+				</a>
+			</div>
+			<!--end:Menu item-->
+			<!--begin:Menu item-->
+			<div class="menu-item">
+				<a class="menu-link {{ request()->routeIs('dashboard.*') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+					<span class="menu-icon">{!! getIcon('document', 'fs-2') !!}</span>
+					<span class="menu-title">Materi Belajar</span>
+				</a>
+			</div>
+			<!--end:Menu item-->
+			<!--begin:Menu item-->
+			<div class="menu-item">
+				<a class="menu-link {{ request()->routeIs('dashboard.*') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+					<span class="menu-icon">{!! getIcon('note', 'fs-2') !!}</span>
+					<span class="menu-title">Tugas Belajar</span>
+				</a>
+			</div>
+			<!--end:Menu item-->
+			<!--begin:Menu item-->
+			<div class="menu-item">
+				<a class="menu-link {{ request()->routeIs('dashboard.*') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+					<span class="menu-icon">{!! getIcon('chart-line', 'fs-2') !!}</span>
+					<span class="menu-title">Laporan</span>
+				</a>
+			</div>
+			<!--end:Menu item-->
+			<!--begin:Menu item-->
 			<div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('user-management.*') ? 'here show' : '' }}">
 				<!--begin:Menu link-->
 				<span class="menu-link">

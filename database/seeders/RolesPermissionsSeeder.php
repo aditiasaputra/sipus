@@ -14,59 +14,48 @@ class RolesPermissionsSeeder extends Seeder
      */
     public function run(): void
     {
-        $abilities = [
-            'read',
-            'write',
-            'create',
+        $abilities = ['create', 'read', 'update', 'delete'];
+
+        $modules = [
+            'siswa',
+            'guru',
+            'kelas',
+            'pelajaran',
+            'mengajar',
+            'materi',
+            'tugas',
+            'laporan',
+            'user',
         ];
+
+        foreach ($modules as $module) {
+            foreach ($abilities as $ability) {
+                Permission::firstOrCreate(['name' => "$ability $module"]);
+            }
+        }
 
         $permissions_by_role = [
-            'administrator' => [
-                'user management',
-                'content management',
-                'financial management',
-                'reporting',
-                'payroll',
-                'disputes management',
-                'api controls',
-                'database management',
-                'repository management',
-            ],
-            'developer' => [
-                'api controls',
-                'database management',
-                'repository management',
-            ],
-            'analyst' => [
-                'content management',
-                'financial management',
-                'reporting',
-                'payroll',
-            ],
-            'support' => [
-                'reporting',
-            ],
-            'trial' => [
-            ],
+            'admin' => $modules,
+            'kepala sekolah' => ['laporan', 'guru', 'kelas', 'pelajaran', 'siswa'],
+            'guru' => ['siswa', 'kelas', 'materi', 'tugas', 'laporan'],
+            'siswa' => ['materi', 'tugas'],
         ];
 
-        foreach ($permissions_by_role['administrator'] as $permission) {
-            foreach ($abilities as $ability) {
-                Permission::create(['name' => $ability . ' ' . $permission]);
-            }
-        }
-
-        foreach ($permissions_by_role as $role => $permissions) {
-            $full_permissions_list = [];
-            foreach ($abilities as $ability) {
-                foreach ($permissions as $permission) {
-                    $full_permissions_list[] = $ability . ' ' . $permission;
+        foreach ($permissions_by_role as $role => $allowed_modules) {
+            $permissions = [];
+            foreach ($allowed_modules as $module) {
+                foreach ($abilities as $ability) {
+                    $permissions[] = "$ability $module";
                 }
             }
-            Role::create(['name' => $role])->syncPermissions($full_permissions_list);
+
+            Role::firstOrCreate(['name' => $role])
+                ->syncPermissions($permissions);
         }
 
-        User::find(1)->assignRole('administrator');
-        User::find(2)->assignRole('developer');
+        User::find(1)?->assignRole('admin');
+        User::find(2)?->assignRole('kepala sekolah');
+        User::find(3)?->assignRole('guru');
+        User::find(4)?->assignRole('siswa');
     }
 }
