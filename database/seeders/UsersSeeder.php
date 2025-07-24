@@ -18,6 +18,7 @@ class UsersSeeder extends Seeder
     {
         $adminUser = User::create([
             'name'              => 'Administrator',
+            'username'          => 'administrator',
             'email'             => 'admin@admin.com',
             'password'          => Hash::make('demo'),
             'email_verified_at' => now(),
@@ -25,6 +26,7 @@ class UsersSeeder extends Seeder
 
         $principal = User::create([
             'name'              => 'Principal',
+            'username'          => 'principal',
             'email'             => 'principal@principal.com',
             'password'          => Hash::make('demo'),
             'email_verified_at' => now(),
@@ -32,6 +34,7 @@ class UsersSeeder extends Seeder
 
         $teacher = User::create([
             'name'              => 'Teacher',
+            'username'          => 'teacher',
             'email'             => 'teacher@teacher.com',
             'password'          => Hash::make('demo'),
             'email_verified_at' => now(),
@@ -39,6 +42,7 @@ class UsersSeeder extends Seeder
 
         $student = User::create([
             'name'              => 'Student',
+            'username'          => 'student',
             'email'             => 'student@student.com',
             'password'          => Hash::make('demo'),
             'email_verified_at' => now(),

@@ -55,7 +55,7 @@
         <!--begin::Input group--->
         <div class="fv-row mb-8">
             <!--begin::Email-->
-            <input type="text" placeholder="Email" name="email" autocomplete="off" class="form-control bg-transparent" value="{{ config('app.debug') == true ? 'admin@admin.com' : '' }}"/>
+            <input type="text" placeholder="Email" name="email" autocomplete="off" class="form-control bg-transparent" value="{{ config('app.debug') == true ? 'admin@admin.com' : '' }}" autofocus/>
             <!--end::Email-->
         </div>
 
