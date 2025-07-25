@@ -25,7 +25,7 @@
 			<!--end:Menu item-->
 			<!--begin:Menu item-->
 			<div class="menu-item">
-				<a class="menu-link {{ request()->routeIs('dashboard.*') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+				<a class="menu-link {{ request()->routeIs('subjects.*') ? 'active' : '' }}" href="{{ route('subjects.index') }}">
 					<span class="menu-icon">{!! getIcon('book-open', 'fs-2') !!}</span>
 					<span class="menu-title">Mata Pelajaran</span>
 				</a>

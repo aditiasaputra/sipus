@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Apps;
 
+use App\DataTables\SubjectsDataTable;
+use App\Http\Controllers\Controller;
 use App\Models\Subject;
 use App\Http\Requests\StoreSubjectRequest;
 use App\Http\Requests\UpdateSubjectRequest;
@@ -11,9 +13,9 @@ class SubjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(SubjectsDataTable $dataTable)
     {
-        //
+        return $dataTable->render('pages/apps.subjects.index');
     }
 
     /**
@@ -21,7 +23,7 @@ class SubjectController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages/apps.subjects.create');
     }
 
     /**
@@ -29,7 +31,15 @@ class SubjectController extends Controller
      */
     public function store(StoreSubjectRequest $request)
     {
-        //
+        $validated = $request->validate([
+            'code' => 'required|string|max:10|unique:subjects,code',
+            'name' => 'required|string|max:255',
+        ]);
+
+        Subject::create($validated);
+
+        return redirect()->route('pages/apps.subjects.index')
+            ->with('success', 'Subject created successfully');
     }
 
     /**
@@ -37,7 +47,7 @@ class SubjectController extends Controller
      */
     public function show(Subject $subject)
     {
-        //
+        return view('pages/apps.subjects.show', compact('subject'));
     }
 
     /**
@@ -45,7 +55,7 @@ class SubjectController extends Controller
      */
     public function edit(Subject $subject)
     {
-        //
+        return view('pages/apps.subjects.edit', compact('subject'));
     }
 
     /**
@@ -53,7 +63,15 @@ class SubjectController extends Controller
      */
     public function update(UpdateSubjectRequest $request, Subject $subject)
     {
-        //
+        $validated = $request->validate([
+            'code' => 'required|string|max:10|unique:subjects,code,' . $subject->id,
+            'name' => 'required|string|max:255',
+        ]);
+
+        $subject->update($validated);
+
+        return redirect()->route('pages/apps.subjects.index')
+            ->with('success', 'Subject updated successfully');
     }
 
     /**
@@ -61,6 +79,18 @@ class SubjectController extends Controller
      */
     public function destroy(Subject $subject)
     {
-        //
+        try {
+            $subject->delete();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Subject deleted successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error deleting subject: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }

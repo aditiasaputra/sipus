@@ -16,6 +16,26 @@ Breadcrumbs::for('dashboard', function (BreadcrumbTrail $trail) {
     $trail->push('Dashboard', route('dashboard'));
 });
 
+Breadcrumbs::for('subjects.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('Subjects', route('subjects.index'));
+});
+
+Breadcrumbs::for('subjects.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('subjects.index');
+    $trail->push('Add Subject', route('subjects.create'));
+});
+
+Breadcrumbs::for('subjects.show', function (BreadcrumbTrail $trail, $subject) {
+    $trail->parent('subjects.index');
+    $trail->push($subject->name, route('subjects.show', $subject));
+});
+
+Breadcrumbs::for('subjects.edit', function (BreadcrumbTrail $trail, $subject) {
+    $trail->parent('subjects.show', $subject);
+    $trail->push('Edit', route('subjects.edit', $subject));
+});
+
 // Home > Dashboard > User Management
 Breadcrumbs::for('user-management.index', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
