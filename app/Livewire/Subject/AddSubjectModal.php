@@ -4,12 +4,19 @@ namespace App\Livewire\Subject;
 
 use App\Models\Subject;
 use Livewire\Component;
+use Livewire\Attributes\On;
 use Illuminate\Validation\Rule;
 
 class AddSubjectModal extends Component
 {
     public $code = '', $name = '', $subject_id;
     public $update_mode = false;
+
+    protected $listeners = [
+        'delete_subject' => 'deleteSubject',
+        'update_subject' => 'updateSubject',
+        'new_subject' => 'hydrate',
+    ];
     
     protected function rules()
     {
@@ -31,6 +38,11 @@ class AddSubjectModal extends Component
         'name.required' => 'Subject name is required.',
         'name.max' => 'Subject name must not exceed 255 characters.',
     ];
+
+    public function render()
+    {
+        return view('livewire.subject.add-subject-modal');
+    }
 
     public function submit()
     {
@@ -61,11 +73,6 @@ class AddSubjectModal extends Component
         $this->resetValidation();
     }
 
-    public function render()
-    {
-        return view('livewire.subject.add-subject-modal');
-    }
-
     #[On('new_subject')]
     public function newSubject()
     {
@@ -73,30 +80,30 @@ class AddSubjectModal extends Component
         $this->resetErrorBag();
     }
 
-    #[On('edit_subject')]
-    public function editSubject($subjectId)
+    #[On('update_subject')]
+    public function updateSubject($subjectId)
     {
         $this->reset();
         $this->resetErrorBag();
         
         $subject = Subject::find($subjectId);
         if ($subject) {
+            $this->update_mode = true;
+
             $this->subject_id = $subject->id;
             $this->code = $subject->code;
             $this->name = $subject->name;
-            $this->update_mode = true;
         }
     }
 
-    public function delete($id)
-
+    public function deleteSubject($id)
     {
         Subject::find($id)->delete();
-        session()->flash('message', 'Subject deleted successfully');
+        $this->dispatch('success', 'Subject deleted successfully');
+
     }
 
     public function cancel()
-
     {
         $this->updateMode = false;
         $this->resetInputFields();

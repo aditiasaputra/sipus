@@ -45,15 +45,17 @@ class SubjectsDataTable extends DataTable
                                     <a href="' . route('subjects.show', $subject->id) . '" class="menu-link px-3">View</a>
                                 </div>
                                 <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3 edit-btn" data-bs-toggle="tooltip" title="Edit"
-                                    data-id="' . $subject->id . '"
-                                    data-code="' . $subject->code . '"
-                                    data-name="' . $subject->name . '">
+                                    <a href="#" class="menu-link px-3 edit-btn"
+                                    title="Edit"
+                                    data-kt-subject-id="' . $subject->id . '"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#kt_modal_add_subject"
+                                    data-kt-action="update_row">
                                         Edit
                                     </a>
                                 </div>
                                 <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3 text-danger" data-bs-toggle="modal" data-bs-target="#delete_modal" data-id="' . $subject->id . '">Delete</a>
+                                    <a href="#" class="menu-link px-3 text-danger" data-bs-toggle="modal" data-bs-target="#delete_modal" data-subject-id="' . $subject->id . '">Delete</a>
                                 </div>
                             </div>
                         </div>';

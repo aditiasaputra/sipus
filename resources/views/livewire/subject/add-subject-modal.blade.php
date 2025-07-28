@@ -9,7 +9,7 @@
                 </div>
             <div class="modal-body px-5 my-7">
                 <form id="kt_modal_add_subject_form" class="form" action="#" wire:submit="submit">
-                    <input type="hidden" wire:model.live="subject_id" name="subject_id" value="{{ $subject_id ?? '' }}"/>
+                    <input type="hidden" wire:model.live="subject_id" name="subject_id" wire:model.live="subject_id"/>
                     <div class="d-flex flex-column scroll-y px-5 px-lg-10" id="kt_modal_add_subject_scroll" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_subject_header" data-kt-scroll-wrappers="#kt_modal_add_subject_scroll" data-kt-scroll-offset="300px">
                         
                         <div class="fv-row mb-7">

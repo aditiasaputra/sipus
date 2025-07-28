@@ -88,76 +88,44 @@
                     window.LaravelDataTables['subjects-table'].ajax.reload();
                 });
             });
-
             $('#kt_modal_add_subject').on('hidden.bs.modal', function () {
                 Livewire.dispatch('new_subject');
-                document.getElementById('kt_modal_add_subject_header').querySelector('h2').innerText = 'Add Subject';
+            });
+            
+            // Add click event listener to update buttons
+            document.querySelectorAll('[data-kt-action="update_row"]').forEach(function (element) {
+                element.addEventListener('click', function () {
+                    Livewire.dispatch('update_subject', [this.getAttribute('data-kt-subject-id')]);
+                });
             });
 
-            document.getElementById('addSubjectButton').addEventListener('click', function() {
-                Livewire.dispatch('new_subject');
-                document.getElementById('kt_modal_add_subject_header').querySelector('h2').innerText = 'Add Subject';
+            $('#kt_modal_add_subject').on('show.bs.modal', function (event) {
+                let button = $(event.relatedTarget);
+                let subjectId = button.data('kt-subject-id');
+                Livewire.dispatch('update_subject', [subjectId]);
             });
-
-            document.addEventListener('click', function(event) {
-                const editButton = event.target.closest('.edit-btn');
-
-                if (editButton) {
-                    const subjectId = editButton.dataset.id;
-                    const subjectCode = editButton.dataset.code;
-                    const subjectName = editButton.dataset.name;
-
-                    Livewire.dispatch('edit_subject', { id: subjectId, code: subjectCode, name: subjectName });
-
-                    const modalHeader = document.getElementById('kt_modal_add_subject_header');
-                    if (modalHeader) {
-                        const modalTitle = modalHeader.querySelector('h2');
-                        if (modalTitle) {
-                            modalTitle.innerText = 'Edit Subject';
-                        }
-                    }
-
-                    const addSubjectModal = new bootstrap.Modal(document.getElementById('kt_modal_add_subject'));
-                    addSubjectModal.show();
-                }
-            });
-
 
             $('#delete_modal').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget);
-                var subjectId = button.data('id');
-                var form = $('#deleteSubjectForm');
-                form.attr('action', '/subjects/' + subjectId);
+                let button = $(event.relatedTarget);
+                let subjectId = button.data('subject-id');
+                let form = $('#deleteSubjectForm');
+                form.attr('data-kt-subject-id', subjectId)
             });
 
             $('#deleteSubjectForm').on('submit', function(e) {
                 e.preventDefault();
-                var form = $(this);
-                var url = form.attr('action');
-                
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: form.serialize(),
-                    beforeSend: function() {
-                        form.find('button[type="submit"]').attr('disabled', true);
-                        form.find('.indicator-label').hide();
-                        form.find('.indicator-progress').show();
-                    },
-                    success: function(response) {
-                        $('#delete_modal').modal('hide');
-                        window.LaravelDataTables['subjects-table'].ajax.reload();
-                        toastr.success('Subject deleted successfully');
-                    },
-                    error: function(xhr) {
-                        toastr.error('Error deleting subject');
-                    },
-                    complete: function() {
-                        form.find('button[type="submit"]').attr('disabled', false);
-                        form.find('.indicator-label').show();
-                        form.find('.indicator-progress').hide();
-                    }
-                });
+                let form = $(this);
+                form.find('button[type="submit"]').attr('disabled', true);
+                form.find('.indicator-label').hide();
+                form.find('.indicator-progress').show();
+
+                Livewire.dispatch('delete_subject', [this.getAttribute('data-kt-subject-id')]);
+                setTimeout(() => {
+                    $('#delete_modal').modal('hide');
+                    form.find('button[type="submit"]').attr('disabled', false);
+                    form.find('.indicator-label').show();
+                    form.find('.indicator-progress').hide();
+                }, 1250);
             });
         </script>
     @endpush
