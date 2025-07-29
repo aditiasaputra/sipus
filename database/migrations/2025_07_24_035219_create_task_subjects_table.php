@@ -19,8 +19,8 @@ return new class extends Migration
             $table->foreignId('teacher_id')->nullable()->constrained('teachers')->onDelete('set null'); // guru
             $table->string('code');
             $table->string('name');
-            $table->text('note');
-            $table->string('file');
+            $table->text('note')->nullable();
+            $table->string('file')->nullable();
             $table->timestamps();
         });
     }

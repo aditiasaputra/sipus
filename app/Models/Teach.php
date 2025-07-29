@@ -9,4 +9,6 @@ class Teach extends Model
 {
     /** @use HasFactory<\Database\Factories\TeachFactory> */
     use HasFactory;
+
+    protected $fillable = ['grade_id', 'subject_id', 'teacher_id', 'code', 'name', 'time', 'room'];
 }
