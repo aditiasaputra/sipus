@@ -33,7 +33,7 @@
 			<!--end:Menu item-->
 			<!--begin:Menu item-->
 			<div class="menu-item">
-				<a class="menu-link {{ request()->routeIs('dashboard.*') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+				<a class="menu-link {{ request()->routeIs('grades.*') ? 'active' : '' }}" href="{{ route('grades.index') }}">
 					<span class="menu-icon">{!! getIcon('element-11', 'fs-2') !!}</span>
 					<span class="menu-title">Kelas</span>
 				</a>

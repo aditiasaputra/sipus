@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\Apps\PermissionManagementController;
-use App\Http\Controllers\Apps\RoleManagementController;
-use App\Http\Controllers\Apps\UserManagementController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Apps\GradeController;
 use App\Http\Controllers\Apps\SubjectController;
 use App\Http\Controllers\Auth\SocialiteController;
-use App\Http\Controllers\DashboardController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Apps\RoleManagementController;
+use App\Http\Controllers\Apps\UserManagementController;
+use App\Http\Controllers\Apps\PermissionManagementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
+    Route::resource('/grades', GradeController::class);
     Route::resource('/subjects', SubjectController::class);
 
     Route::name('user-management.')->group(function () {

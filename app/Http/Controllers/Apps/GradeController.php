@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Apps;
 
 use App\Models\Grade;
+use App\DataTables\GradesDataTable;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreGradeRequest;
 use App\Http\Requests\UpdateGradeRequest;
 
@@ -11,9 +13,9 @@ class GradeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(GradesDataTable $dataTable)
     {
-        //
+        return $dataTable->render('pages/apps.grades.list');
     }
 
     /**
@@ -37,7 +39,7 @@ class GradeController extends Controller
      */
     public function show(Grade $grade)
     {
-        //
+        return view('pages/apps.subjects.show', compact('subject'));
     }
 
     /**

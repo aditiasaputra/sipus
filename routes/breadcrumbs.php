@@ -16,6 +16,26 @@ Breadcrumbs::for('dashboard', function (BreadcrumbTrail $trail) {
     $trail->push('Dashboard', route('dashboard'));
 });
 
+Breadcrumbs::for('grades.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('Grades', route('grades.index'));
+});
+
+Breadcrumbs::for('grades.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('grades.index');
+    $trail->push('Add Grade', route('grades.create'));
+});
+
+Breadcrumbs::for('grades.show', function (BreadcrumbTrail $trail, $grade) {
+    $trail->parent('grades.index');
+    $trail->push($grade->name, route('grades.show', $grade));
+});
+
+Breadcrumbs::for('grades.edit', function (BreadcrumbTrail $trail, $grade) {
+    $trail->parent('grades.show', $grade);
+    $trail->push('Edit', route('grades.edit', $grade));
+});
+
 Breadcrumbs::for('subjects.index', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
     $trail->push('Subjects', route('subjects.index'));
