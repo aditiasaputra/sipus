@@ -15,7 +15,7 @@ class SubjectController extends Controller
      */
     public function index(SubjectsDataTable $dataTable)
     {
-        return $dataTable->render('pages/apps.subjects.index');
+        return $dataTable->render('pages/apps.subjects.list');
     }
 
     /**
@@ -23,7 +23,7 @@ class SubjectController extends Controller
      */
     public function create()
     {
-        return view('pages/apps.subjects.create');
+        //
     }
 
     /**
@@ -31,15 +31,7 @@ class SubjectController extends Controller
      */
     public function store(StoreSubjectRequest $request)
     {
-        $validated = $request->validate([
-            'code' => 'required|string|max:10|unique:subjects,code',
-            'name' => 'required|string|max:255',
-        ]);
-
-        Subject::create($validated);
-
-        return redirect()->route('pages/apps.subjects.index')
-            ->with('success', 'Subject created successfully');
+        //
     }
 
     /**
