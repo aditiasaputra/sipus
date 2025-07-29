@@ -9,4 +9,6 @@ class Grade extends Model
 {
     /** @use HasFactory<\Database\Factories\GradeFactory> */
     use HasFactory;
+
+    protected $fillable = ['teacher_id', 'code', 'name'];
 }
