@@ -35,30 +35,8 @@ class SubjectsDataTable extends DataTable
                 return $subject->created_at->format('d M Y, H:i');
             })
             ->addColumn('action', function (Subject $subject) {
-                return '<div class="d-flex justify-content-end">
-                            <a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                Actions
-                                <i class="ki-outline ki-down fs-5 ms-1"></i>
-                            </a>
-                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                <div class="menu-item px-3">
-                                    <a href="' . route('subjects.show', $subject->id) . '" class="menu-link px-3">View</a>
-                                </div>
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3 edit-btn"
-                                    title="Edit"
-                                    data-kt-subject-id="' . $subject->id . '"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#kt_modal_add_subject"
-                                    data-kt-action="update_row">
-                                        Edit
-                                    </a>
-                                </div>
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3 text-danger" data-bs-toggle="modal" data-bs-target="#delete_modal" data-subject-id="' . $subject->id . '">Delete</a>
-                                </div>
-                            </div>
-                        </div>';
+                return view('pages/apps.subjects.columns._actions', compact('subject'));
+
             })
             ->rawColumns(['code', 'name', 'action'])
             ->setRowId('id');
@@ -84,7 +62,8 @@ class SubjectsDataTable extends DataTable
             ->parameters([
                 'scrollX' => true,
                 'drawCallback' => 'function() { KTMenu.createInstances(); }'
-            ]);
+            ])
+            ->drawCallback("function() {" . file_get_contents(resource_path('views/pages/apps/subjects/columns/_draw-scripts.js')) . "}");
     }
 
     public function getColumns(): array

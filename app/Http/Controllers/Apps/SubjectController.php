@@ -55,7 +55,7 @@ class SubjectController extends Controller
      */
     public function edit(Subject $subject)
     {
-        return view('pages/apps.subjects.edit', compact('subject'));
+        //
     }
 
     /**
@@ -63,15 +63,7 @@ class SubjectController extends Controller
      */
     public function update(UpdateSubjectRequest $request, Subject $subject)
     {
-        $validated = $request->validate([
-            'code' => 'required|string|max:10|unique:subjects,code,' . $subject->id,
-            'name' => 'required|string|max:255',
-        ]);
-
-        $subject->update($validated);
-
-        return redirect()->route('pages/apps.subjects.index')
-            ->with('success', 'Subject updated successfully');
+        //
     }
 
     /**
@@ -79,18 +71,6 @@ class SubjectController extends Controller
      */
     public function destroy(Subject $subject)
     {
-        try {
-            $subject->delete();
-            
-            return response()->json([
-                'success' => true,
-                'message' => 'Subject deleted successfully'
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Error deleting subject: ' . $e->getMessage()
-            ], 500);
-        }
+        //
     }
 }

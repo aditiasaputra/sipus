@@ -24,7 +24,7 @@ class AddSubjectModal extends Component
             'code' => [
                 'required',
                 'string',
-                'max:10',
+                'max:16',
                 Rule::unique('subjects', 'code')->ignore($this->subject_id)
             ],
             'name' => 'required|string|max:255',
@@ -34,7 +34,7 @@ class AddSubjectModal extends Component
     protected $messages = [
         'code.required' => 'Subject code is required.',
         'code.unique' => 'Subject code already exists.',
-        'code.max' => 'Subject code must not exceed 10 characters.',
+        'code.max' => 'Subject code must not exceed 16 characters.',
         'name.required' => 'Subject name is required.',
         'name.max' => 'Subject name must not exceed 255 characters.',
     ];
