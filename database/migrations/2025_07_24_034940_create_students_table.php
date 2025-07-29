@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
             $table->integer('student_id')->unique();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

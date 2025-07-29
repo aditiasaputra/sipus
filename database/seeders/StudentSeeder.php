@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
+use App\Models\Student;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class StudentSeeder extends Seeder
 {
@@ -12,6 +14,15 @@ class StudentSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $studentUserIds = User::role('guru')->pluck('id')->toArray();
+
+        foreach ($studentUserIds as $studentUserId) {
+            if (!Student::where('user_id', $studentUserId)->exists()) {
+                Student::factory()->create([
+                    'user_id' => $studentUserId,
+                    'student_id' => fake()->unique()->numerify('######'),
+                ]);
+            }
+        }
     }
 }
