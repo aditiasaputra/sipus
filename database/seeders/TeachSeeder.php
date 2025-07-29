@@ -44,14 +44,17 @@ class TeachSeeder extends Seeder
         $times = ['08:00-09:00', '09:00-10:00', '10:00-11:00', '13:00-14:00', '14:00-15:00'];
         $rooms = ['R.101', 'R.102', 'R.201', 'R.202', 'Lab Komputer', 'Lab IPA'];
 
+        
         for ($i = 0; $i < 30; $i++) {
+            $time = fake()->randomElement($times);
+
             Teach::factory()->create([
                 'grade_id' => $gradeIds[array_rand($gradeIds)],
                 'subject_id' => $subjectIds[array_rand($subjectIds)],
                 'teacher_id' => $teacherIds[array_rand($teacherIds)],
                 'code' => fake()->unique()->lexify('TCH-????'),
-                'name' => fake()->randomElement($days) . ' ' . fake()->randomElement($times),
-                'time' => fake()->randomElement($times),
+                'name' => fake()->randomElement($days) . ' ' . $time,
+                'time' => $time,
                 'room' => fake()->randomElement($rooms),
             ]);
         }
