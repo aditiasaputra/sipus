@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             SubjectSeeder::class,
             TaskSubjectSeeder::class,
             TeachSeeder::class,
+            TeachMaterialSeeder::class,
         ]);
 
         User::factory(20)->create();

@@ -52,7 +52,7 @@ class TeachSeeder extends Seeder
                 'grade_id' => $gradeIds[array_rand($gradeIds)],
                 'subject_id' => $subjectIds[array_rand($subjectIds)],
                 'teacher_id' => $teacherIds[array_rand($teacherIds)],
-                'code' => fake()->unique()->lexify('TCH-????'),
+                'code' => strtoupper(fake()->unique()->lexify('tch-???')),
                 'name' => fake()->randomElement($days) . ' ' . $time,
                 'time' => $time,
                 'room' => fake()->randomElement($rooms),
