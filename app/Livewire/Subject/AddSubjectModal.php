@@ -10,7 +10,7 @@ use Illuminate\Validation\Rule;
 class AddSubjectModal extends Component
 {
     public $code = '', $name = '', $subject_id;
-    public $update_mode = false;
+    public $edit_mode = false;
 
     protected $listeners = [
         'delete_subject' => 'deleteSubject',
@@ -54,7 +54,7 @@ class AddSubjectModal extends Component
                 'name' => $this->name,
             ]);
             $message = 'Subject updated successfully';
-            $this->update_mode = false;
+            $this->edit_mode = false;
         } else {
             Subject::create([
                 'code' => $this->code,
@@ -88,7 +88,7 @@ class AddSubjectModal extends Component
         
         $subject = Subject::find($subjectId);
         if ($subject) {
-            $this->update_mode = true;
+            $this->edit_mode = true;
 
             $this->subject_id = $subject->id;
             $this->code = $subject->code;
@@ -105,7 +105,7 @@ class AddSubjectModal extends Component
 
     public function cancel()
     {
-        $this->updateMode = false;
+        $this->edit_mode = false;
         $this->resetInputFields();
     }
 }

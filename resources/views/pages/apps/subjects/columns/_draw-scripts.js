@@ -38,18 +38,6 @@ document.querySelectorAll('[data-kt-action="delete_row"]').forEach(function (ele
     });
 });
 
-// document.addEventListener('livewire:initialized', () => {
-//     Livewire.on('success', (message) => {
-//         Swal.close();
-//         toastr.success(message || 'Action completed successfully!');
-//     });
-
-//     Livewire.on('error', (message) => {
-//         Swal.close();
-//         toastr.error(message || 'An error occurred!');
-//     });
-// });
-
 // Add click event listener to update buttons
 document.querySelectorAll('[data-kt-action="update_row"]').forEach(function (element) {
     element.addEventListener('click', function () {

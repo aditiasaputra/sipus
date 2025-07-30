@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Grade;
 
+use App\Models\Teacher;
 use App\Models\Grade;
 use Livewire\Component;
 use Livewire\Attributes\On;
@@ -9,14 +10,20 @@ use Illuminate\Validation\Rule;
 
 class AddGradeModal extends Component
 {
-    public $code = '', $name = '', $grade_id;
-    public $update_mode = false;
+    public $code, $name, $grade_id, $teacher_id;
+    public $edit_mode = false;
+    public array $teachers = [];
 
     protected $listeners = [
         'delete_grade' => 'deleteGrade',
         'update_grade' => 'updateGrade',
         'new_grade' => 'hydrate',
     ];
+
+    public function mount()
+    {
+        $this->loadTeachers();
+    }
     
     protected function rules()
     {
@@ -28,6 +35,7 @@ class AddGradeModal extends Component
                 Rule::unique('grades', 'code')->ignore($this->grade_id)
             ],
             'name' => 'required|string|max:255',
+            'teacher_id' => 'required|exists:users,id',
         ];
     }
 
@@ -37,6 +45,8 @@ class AddGradeModal extends Component
         'code.max' => 'Grade code must not exceed 16 characters.',
         'name.required' => 'Grade name is required.',
         'name.max' => 'Grade name must not exceed 255 characters.',
+        'teacher.required' => 'Teacher is required.',
+        'teacher_id.exists' => 'Selected teacher is invalid.',
     ];
 
     public function render()
@@ -48,22 +58,23 @@ class AddGradeModal extends Component
     {
         $this->validate();
 
+        $data = [
+            'code' => $this->code,
+            'name' => $this->name,
+            'teacher_id' => $this->teacher_id ?: null,
+        ];
+
         if ($this->grade_id) {
-            Grade::find($this->grade_id)->update([
-                'code' => $this->code,
-                'name' => $this->name,
-            ]);
+            Grade::find($this->grade_id)->update($data);
             $message = 'Grade updated successfully';
-            $this->update_mode = false;
+            $this->edit_mode = false;
         } else {
-            Grade::create([
-                'code' => $this->code,
-                'name' => $this->name,
-            ]);
+            Grade::create($data);
             $message = 'Grade created successfully';
         }
 
         $this->reset();
+        $this->loadTeachers();
         $this->dispatch('success', $message);
     }
 
@@ -78,6 +89,7 @@ class AddGradeModal extends Component
     {
         $this->reset();
         $this->resetErrorBag();
+        $this->loadTeachers();
     }
 
     #[On('update_grade')]
@@ -85,14 +97,15 @@ class AddGradeModal extends Component
     {
         $this->reset();
         $this->resetErrorBag();
+        $this->loadTeachers();
         
-        $grade = Grade::find($gradeId);
+        $grade = Grade::with('teacher')->find($gradeId);
         if ($grade) {
-            $this->update_mode = true;
-
+            $this->edit_mode = true;
             $this->grade_id = $grade->id;
             $this->code = $grade->code;
             $this->name = $grade->name;
+            $this->teacher_id = $grade->teacher_id;
         }
     }
 
@@ -105,7 +118,35 @@ class AddGradeModal extends Component
 
     public function cancel()
     {
-        $this->updateMode = false;
+        $this->edit_mode  = false;
+        $this->reset();
         $this->resetInputFields();
+    }
+
+    public function getAvailableTeachers()
+    {
+        return Teacher::with('user:id,name,email')
+            ->whereDoesntHave('assignedGrade', function ($query) {
+                if ($this->grade_id) {
+                    $query->where('id', '!=', $this->grade_id);
+                }
+            })
+            ->get();
+    }
+    
+    private function loadTeachers()
+    {
+        $this->teachers = Teacher::with('user:id,name,email')
+            ->orderBy('id')
+            ->get()
+            ->map(function ($teacher) {
+                return [
+                    'id' => $teacher->id,
+                    'name' => $teacher->user->name ?? 'Unknown',
+                    'email' => $teacher->user->email ?? 'No Email',
+                    'display_name' => ($teacher->user->name ?? 'Unknown') . ' (' . ($teacher->user->email ?? 'No Email') . ')',
+                    'teacher_id' => $teacher->teacher_id ?? null,
+                ];
+            })->toArray();
     }
 }

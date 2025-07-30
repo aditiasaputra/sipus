@@ -30,4 +30,25 @@ class Grade extends Model
     {
         return $this->belongsTo(Teacher::class);
     }
+
+    public function getTeacherNameAttribute(): string
+    {
+        return $this->teacher ? $this->teacher->name : 'No Teacher Assigned';
+    }
+
+    public function scopeWithTeacher($query)
+    {
+        return $query->with('teacher:id,name,email');
+    }
+
+    public function scopeHasTeacher($query)
+    {
+        return $query->whereNotNull('teacher_id');
+    }
+
+    public function scopeWithoutTeacher($query)
+    {
+        return $query->whereNull('teacher_id');
+    }
+
 }

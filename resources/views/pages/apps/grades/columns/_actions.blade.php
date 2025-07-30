@@ -14,7 +14,7 @@
 
     <!--begin::Menu item-->
     <div class="menu-item px-3">
-        <a href="#" class="menu-link px-3" data-kt-grade-id="{{ $grade->id }}" data-bs-toggle="modal" data-bs-target="#kt_modal_add_grade" data-kt-action="update_row">
+        <a href="#" class="menu-link px-3 text-warning" data-kt-grade-id="{{ $grade->id }}" data-bs-toggle="modal" data-bs-target="#kt_modal_add_grade" data-kt-action="update_row">
             Edit
         </a>
     </div>

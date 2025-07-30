@@ -6,7 +6,7 @@
             <!--begin::Modal header-->
             <div class="modal-header" id="kt_modal_add_user_header">
                 <!--begin::Modal title-->
-                <h2 class="fw-bold">Add User</h2>
+                <h2 class="fw-bold">{{ $edit_mode ? 'Edit User' : 'Add User' }}</h2>
                 <!--end::Modal title-->
                 <!--begin::Close-->
                 <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal" aria-label="Close">
@@ -140,9 +140,11 @@
                     <!--end::Scroll-->
                     <!--begin::Actions-->
                     <div class="text-center pt-15">
-                        <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal" aria-label="Close" wire:loading.attr="disabled">Discard</button>
-                        <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
-                            <span class="indicator-label" wire:loading.remove>Submit</span>
+                        <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal" aria-label="Close" wire:loading.attr="disabled">
+                            {{ $edit_mode ? 'Cancel' : 'Discard' }}
+                        </button>
+                        <button type="submit" class="btn btn-{{ $edit_mode ? 'warning' : 'primary' }}" data-kt-grades-modal-action="submit" wire:loading.attr="disabled" wire:target="submit">
+                            <span class="indicator-label" wire:loading.remove wire:target="submit">{{ $edit_mode ? 'Update' : 'Submit' }}</span>
                             <span class="indicator-progress" wire:loading wire:target="submit">
                                 Please wait...
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
